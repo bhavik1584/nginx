@@ -1,0 +1,49 @@
+ sudo chown -R bhavik-dev-pc:www-data ~/code/my-laravel-project
+ sudo chown -R bhavik-dev-pc:www-data /home/bhavik-dev-pc/
+ sudo chmod -R 755 /home/bhavik-dev-pc/code/
+
+sudo usermod -aG www-data bhavik-dev-pc
+
+
+sudo chown -R bhavik-dev-pc:www-data /home/bhavik-dev-pc/code/erp/
+sudo chmod -R 755 /home/bhavik-dev-pc/code/
+sudo usermod -aG www-data bhavik-dev-pc
+
+
+CREATE USER 'bhavik'@'localhost' IDENTIFIED BY '12345';
+GRANT ALL PRIVILEGES ON mydatabase.* TO 'bhavik'@'%';
+FLUSH PRIVILEGES;
+EXIT;
+
+
+server {
+    listen 80;
+    server_name adminer.io;
+
+    root /home/bhavik-dev-pc/code/adminer/;
+    index index.php;
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock; 
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+    # Optional: Set up logging
+    error_log  /var/log/nginx/adminer.io_error.log;
+    access_log /var/log/nginx/adminer.io_access.log;
+
+
+}
+
+
