@@ -9,6 +9,8 @@ sudo chown -R bhavik-dev-pc:www-data /home/bhavik-dev-pc/code/erp/
 sudo chmod -R 755 /home/bhavik-dev-pc/code/
 sudo usermod -aG www-data bhavik-dev-pc
 
+getent group www-data
+
 
 CREATE USER 'bhavik'@'localhost' IDENTIFIED BY '12345';
 GRANT ALL PRIVILEGES ON mydatabase.* TO 'bhavik'@'%';
